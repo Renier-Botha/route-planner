@@ -15,15 +15,14 @@ trap cleanup EXIT INT TERM
 
 # Start Angular frontend
 echo "Starting Angular frontend..."
-cd route-planner-frontend
+cd client
 npm start &
 FRONTEND_PID=$!
 cd ..
 
 # Start .NET backend
 echo "Starting .NET backend..."
-cd RoutePlanner
-dotnet run &
+dotnet watch --project src/RoutePlanner.Api &
 BACKEND_PID=$!
 cd ..
 
