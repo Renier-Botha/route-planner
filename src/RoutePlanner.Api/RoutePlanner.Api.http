@@ -1,6 +1,16 @@
-@RoutePlanner.Api_HostAddress = http://localhost:5088
+@RoutePlanner_Api_HostAddress = http://localhost:5088
 
-GET {{RoutePlanner.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+POST {{RoutePlanner_Api_HostAddress}}/api/Path/path
+Content-Type: application/json
 
+{
+  "width": 60,
+  "height": 40,
+  "start": { "x": 0, "y": 0 },
+  "end": { "x": 5, "y": 5 },
+  "walls": [
+    { "x": 1, "y": 0 },
+    { "x": 1, "y": 1 }
+  ]
+}
 ###

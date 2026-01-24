@@ -22,7 +22,7 @@ cd ..
 
 # Start .NET backend
 echo "Starting .NET backend..."
-dotnet watch --project src/RoutePlanner.Api &
+dotnet run --project src/RoutePlanner.Api &
 BACKEND_PID=$!
 cd ..
 
