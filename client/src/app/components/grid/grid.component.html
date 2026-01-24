@@ -1,0 +1,9 @@
+<canvas 
+  #canvas
+  (pointerdown)="onPointerDown($event)"
+  (pointermove)="onPointerMove($event)"
+  (pointerup)="onPointerUpCancel()"
+  (pointercancel)="onPointerUpCancel()"
+  (pointerleave)="onPointerUpCancel()"
+  style="width: 100%; height: 100%; display: block; touch-action: none;">
+</canvas>

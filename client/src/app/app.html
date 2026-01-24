@@ -1,46 +1,42 @@
-<style>
-:host { display: block; height: 100vh; }
-.app { display: flex; flex-direction: column; height: 100%; }
-
-.toolbar {
-  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
-  padding: 8px 12px; border-bottom: 1px solid #e5e7eb; background: #fff; position: sticky; top: 0; z-index: 1;
-}
-.toolbar button.active { background: #1f51ff; color: #fff; }
-.toolbar button { padding: 6px 10px; border-radius: 6px; border: 1px solid #d1d5db; background: #f9fafb; }
-.toolbar .status { margin-left: auto; color: #6b7280; }
-
-.canvas-wrap { flex: 1; min-height: 0; }
-.draw-canvas {
-  width: 100%; height: 100%; display: block; background: #fafafa; touch-action: none; cursor: crosshair;
-}
-</style>
-
-<main class="main">
-<div class="app">
-  <div class="toolbar">
-    <button type="button" [class.active]="mode==='wall'" (click)="setMode('wall')">Draw Walls</button>
-    <button type="button" [class.active]="mode==='erase'" (click)="setMode('erase')">Erase</button>
-    <button type="button" [class.active]="mode==='start'" (click)="setMode('start')">Set Start</button>
-    <button type="button" [class.active]="mode==='end'" (click)="setMode('end')">Set End</button>
-    <button type="button" (click)="onClear()">Clear</button>
-    <button type="button" [disabled]="!start || !end" (click)="onSolve()">Solve</button>
-    <span class="status">Start: {{start?.x}},{{start?.y}} | End: {{end?.x}},{{end?.y}}</span>
-  </div>
-
-  <div class="canvas-wrap">
-    <canvas
-      #canvas
-      class="draw-canvas"
-      (pointerdown)="onPointerDown($event)"
-      (pointermove)="onPointerMove($event)"
-      (pointerup)="onPointerUpCancel()"
-      (pointercancel)="onPointerUpCancel()"
-      (pointerleave)="onPointerUpCancel()"
-    ></canvas>
-  </div>
+<div class="container">
+  <header class="toolbar">
+    <h1>{{ title() }}</h1>
+    <div class="controls">
+      <button (click)="setMode('wall')" [class.active]="currentMode === 'wall'">
+        Draw Walls
+      </button>
+      <button (click)="setMode('erase')" [class.active]="currentMode === 'erase'">
+        Erase
+      </button>
+      <button (click)="setMode('start')" [class.active]="currentMode === 'start'">
+        Set Start
+      </button>
+      <button (click)="setMode('end')" [class.active]="currentMode === 'end'">
+        Set End
+      </button>
+      <button (click)="onSolve()" class="solve-btn">
+        Solve
+      </button>
+      <button (click)="onClear()" class="clear-btn">
+        Clear
+      </button>
+    </div>
+    @if (lastSolveStats(); as stats) {
+      <div class="stats">
+        <span>Algorithm: {{ stats.algorithm }}</span>
+        <span>Nodes: {{ stats.nodes }}</span>
+        <span>Time: {{ stats.timeMs.toFixed(2) }}ms</span>
+      </div>
+    }
+  </header>
+  
+  <main class="grid-container">
+    <app-grid 
+      [cols]="60" 
+      [rows]="40"
+      (statsChanged)="onStatsChanged($event)">
+    </app-grid>
+  </main>
 </div>
-</main>
-
 
 <router-outlet />

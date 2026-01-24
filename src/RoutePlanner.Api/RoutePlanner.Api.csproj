@@ -14,4 +14,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
   </ItemGroup>
 
+  <!-- Add these project references -->
+  <ItemGroup>
+    <ProjectReference Include="..\RoutePlanner.Core\RoutePlanner.Core.csproj" />
+    <ProjectReference Include="..\RoutePlanner.Infrastructure\RoutePlanner.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

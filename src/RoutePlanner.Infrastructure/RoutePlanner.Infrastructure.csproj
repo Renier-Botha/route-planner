@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <!-- Infrastructure depends on Core -->
+  <ItemGroup>
+    <ProjectReference Include="..\RoutePlanner.Core\RoutePlanner.Core.csproj" />
+  </ItemGroup>
+
 </Project>
