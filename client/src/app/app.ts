@@ -1,38 +1,12 @@
-import { Component, ViewChild, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { GridComponent } from './components/grid/grid.component';
-
-type Mode = 'wall' | 'erase' | 'start' | 'end';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, GridComponent],
+  imports: [RouterOutlet, NzLayoutModule, NzMenuModule],
   templateUrl: './app.html',
-  styleUrl: './app.css',
-  standalone: true
+  styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('route-planner-frontend');
-  
-  @ViewChild(GridComponent) grid!: GridComponent;
-  
-  currentMode: Mode = 'wall';
-  lastSolveStats = signal<{ nodes: number; timeMs: number; algorithm: string } | null>(null);
-
-  setMode(mode: Mode): void {
-    this.currentMode = mode;
-    this.grid?.setMode(mode);
-  }
-
-  onClear(): void {
-    this.grid?.clear();
-  }
-
-  onSolve(): void {
-    this.grid?.solve();
-  }
-  
-  onStatsChanged(stats: { nodes: number; timeMs: number; algorithm: string } | null): void {
-    this.lastSolveStats.set(stats);
-  }
-}
+export class App {}

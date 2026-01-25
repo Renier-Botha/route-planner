@@ -1,42 +1,7 @@
-<div class="container">
-  <header class="toolbar">
-    <h1>{{ title() }}</h1>
-    <div class="controls">
-      <button (click)="setMode('wall')" [class.active]="currentMode === 'wall'">
-        Draw Walls
-      </button>
-      <button (click)="setMode('erase')" [class.active]="currentMode === 'erase'">
-        Erase
-      </button>
-      <button (click)="setMode('start')" [class.active]="currentMode === 'start'">
-        Set Start
-      </button>
-      <button (click)="setMode('end')" [class.active]="currentMode === 'end'">
-        Set End
-      </button>
-      <button (click)="onSolve()" class="solve-btn">
-        Solve
-      </button>
-      <button (click)="onClear()" class="clear-btn">
-        Clear
-      </button>
+<nz-layout class="app-layout">
+  <nz-content>
+    <div class="inner-content">
+      <router-outlet></router-outlet>
     </div>
-    @if (lastSolveStats(); as stats) {
-      <div class="stats">
-        <span>Algorithm: {{ stats.algorithm }}</span>
-        <span>Nodes: {{ stats.nodes }}</span>
-        <span>Time: {{ stats.timeMs.toFixed(2) }}ms</span>
-      </div>
-    }
-  </header>
-  
-  <main class="grid-container">
-    <app-grid 
-      [cols]="60" 
-      [rows]="40"
-      (statsChanged)="onStatsChanged($event)">
-    </app-grid>
-  </main>
-</div>
-
-<router-outlet />
+  </nz-content>
+</nz-layout>

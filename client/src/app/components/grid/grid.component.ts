@@ -150,6 +150,7 @@ export class GridComponent implements AfterViewInit {
     this.start = null;
     this.end = null;
     this.path = [];
+    this.visited = [];
     this.statsChanged.emit(null);
     this.render();
   }
