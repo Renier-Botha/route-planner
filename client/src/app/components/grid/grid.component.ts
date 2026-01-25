@@ -51,6 +51,7 @@ export class GridComponent implements AfterViewInit {
   start: Point | null = null;
   end: Point | null = null;
   path: Point[] = [];
+  visited: Point[] = [];
 
   ngAfterViewInit(): void {
     if (!this.isBrowser) return;
@@ -177,19 +178,20 @@ export class GridComponent implements AfterViewInit {
     this.pathfindingService.findPath(request).subscribe({
       next: (response) => {
         this.path = response.path ?? [];
-        
+        this.visited = response.visitedPoints ?? [];
+
         const stats: SolveStats = {
           nodes: response.nodesExplored,
           timeMs: response.durationMs,
           algorithm: response.algorithmUsed
         };
-        
+
         this.statsChanged.emit(stats);
-        
+
         console.log(`✅ Path found using ${response.algorithmUsed}`);
         console.log(`   Nodes explored: ${response.nodesExplored}`);
         console.log(`   Time: ${response.durationMs.toFixed(2)}ms`);
-        
+
         this.render();
       },
       error: (err) => {
@@ -232,6 +234,19 @@ export class GridComponent implements AfterViewInit {
       ctx.stroke();
     }
 
+    // Visited Points (draw FIRST, as background layer)
+    if (this.visited.length > 0) {
+      ctx.fillStyle = 'rgba(223, 210, 99, 0.3)'; // Semi-transparent gray
+      for (let i = 0; i < this.visited.length; i++) {
+        ctx.fillRect(
+          this.visited[i].x * this.cellW,
+          this.visited[i].y * this.cellH,
+          this.cellW,
+          this.cellH
+        );
+      }
+    }
+
     // Walls
     ctx.fillStyle = '#374151';
     for (let x = 0; x < this.cols(); x++) {
@@ -250,7 +265,7 @@ export class GridComponent implements AfterViewInit {
       this.drawMarker(this.end, '#ef4444');
     }
 
-    // Path
+    // Path (on top of visited and walls)
     if (this.path.length > 0) {
       ctx.strokeStyle = '#1f51ff';
       ctx.lineWidth = 3;

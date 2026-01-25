@@ -28,12 +28,17 @@ public static class PathfindingMapper
         var pathDto = result.Path
             .Select(p => new PointDto(p.X, p.Y))
             .ToList();
+
+        var visitedPointsDto = result.VisitedPoints
+            .Select(p => new PointDto(p.X, p.Y))
+            .ToHashSet();
             
         return new PathfindingResponseDto(
             pathDto,
             result.NodesExplored,
             result.Duration.TotalMilliseconds,
-            result.AlgorithmName
+            result.AlgorithmName,
+            visitedPointsDto
         );
     }
 }

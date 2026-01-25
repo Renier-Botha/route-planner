@@ -39,7 +39,7 @@ public class AStarAlgorithm : IPathfindingAlgorithm
             {
                 var path = ReconstructPath(cameFrom, current);
                 stopwatch.Stop();
-                return new PathResult(path, nodesExplored, stopwatch.Elapsed, Name);
+                return new PathResult(path, nodesExplored, stopwatch.Elapsed, Name, visited);
             }
 
             if (!visited.Add(current)) continue;
@@ -64,7 +64,7 @@ public class AStarAlgorithm : IPathfindingAlgorithm
         }
 
         stopwatch.Stop();
-        return new PathResult([], nodesExplored, stopwatch.Elapsed, Name);
+        return new PathResult([], nodesExplored, stopwatch.Elapsed, Name, visited);
     }
 
     private static int Heuristic(Point a, Point b) => 
@@ -85,6 +85,6 @@ public class AStarAlgorithm : IPathfindingAlgorithm
     private PathResult EmptyResult(Stopwatch stopwatch)
     {
         stopwatch.Stop();
-        return new PathResult([], 0, stopwatch.Elapsed, Name);
+        return new PathResult([], 0, stopwatch.Elapsed, Name, []);
     }
 }

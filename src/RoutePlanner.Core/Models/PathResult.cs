@@ -7,5 +7,6 @@ public record PathResult(
     List<Point> Path,
     int NodesExplored,
     TimeSpan Duration,
-    string AlgorithmName
+    string AlgorithmName,
+    HashSet<Point> VisitedPoints
 );

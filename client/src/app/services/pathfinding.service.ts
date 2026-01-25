@@ -21,6 +21,7 @@ export interface PathfindingResponse {
   nodesExplored: number;
   durationMs: number;
   algorithmUsed: string;
+  visitedPoints: Point[];
 }
 
 @Injectable({

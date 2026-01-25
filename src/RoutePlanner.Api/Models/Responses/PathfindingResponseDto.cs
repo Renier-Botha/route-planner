@@ -6,5 +6,6 @@ public record PathfindingResponseDto(
     List<PointDto> Path,
     int NodesExplored,
     double DurationMs,
-    string AlgorithmUsed
+    string AlgorithmUsed,
+    HashSet<PointDto> VisitedPoints
 );
