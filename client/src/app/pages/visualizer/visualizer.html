@@ -1,26 +1,25 @@
 <div class="container">
-  <header class="toolbar">
-    <h1>{{ title() }}</h1>
-    <div class="controls">
-      <button (click)="setMode('wall')" [class.active]="currentMode === 'wall'">
-        Draw Walls
-      </button>
-      <button (click)="setMode('erase')" [class.active]="currentMode === 'erase'">
-        Erase
-      </button>
-      <button (click)="setMode('start')" [class.active]="currentMode === 'start'">
-        Set Start
-      </button>
-      <button (click)="setMode('end')" [class.active]="currentMode === 'end'">
-        Set End
-      </button>
-      <button (click)="onSolve()" class="solve-btn">
+
+  <div nz-flex nzVertical="false" class="toolbar">
+    <h1 class="header">{{ title() }}</h1>
+    <nz-space>
+      <nz-select [(ngModel)]="selectedAlgorithm" style="width: 100px;" nzPlaceHolder="Select Algorithm">
+        <nz-option *ngFor="let algo of algorithms" [nzLabel]="algo" [nzValue]="algo">
+        </nz-option>
+      </nz-select>
+      <nz-radio-group nzButtonStyle="solid" [(ngModel)]="currentMode" (ngModelChange)="onModeChange($event)">
+        <label nz-radio-button nzValue="wall">Draw Walls</label>
+        <label nz-radio-button nzValue="erase">Erase</label>
+        <label nz-radio-button nzValue="start">Set Start</label>
+        <label nz-radio-button nzValue="end">Set End</label>
+      </nz-radio-group>
+      <button nz-button (click)="onSolve()" class="solve-btn">
         Solve
       </button>
-      <button (click)="onClear()" class="clear-btn">
+      <button nz-button nzDanger (click)="onClear()">
         Clear
       </button>
-    </div>
+    </nz-space>
     @if (lastSolveStats(); as stats) {
       <div class="stats">
         <span>Algorithm: {{ stats.algorithm }}</span>
@@ -28,13 +27,11 @@
         <span>Time: {{ stats.timeMs.toFixed(2) }}ms</span>
       </div>
     }
-  </header>
+  </div>
+  
   
   <main class="grid-container">
-    <app-grid 
-      [cols]="60" 
-      [rows]="40"
-      (statsChanged)="onStatsChanged($event)">
+    <app-grid [cols]="60" [rows]="40" (statsChanged)="onStatsChanged($event)">
     </app-grid>
   </main>
 </div>
