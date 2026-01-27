@@ -7,7 +7,8 @@ import {
   inject,
   PLATFORM_ID,
   input,
-  output
+  output,
+  effect
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { PathfindingService, Point } from '../../services/pathfinding.service';
@@ -30,10 +31,24 @@ export class GridComponent implements AfterViewInit {
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly pathfindingService = inject(PathfindingService);
 
+  constructor() {
+    // React to changes in cols/rows inputs
+    effect(() => {
+      const cols = this.cols();
+      const rows = this.rows();
+
+      if (this.isBrowser && this.ctx) {
+        this.initializeGrid();
+        this.resizeCanvas();
+        this.render();
+      }
+    });
+  }
+
   // Inputs (configurable from parent)
   cols = input<number>(60);
   rows = input<number>(40);
-  selectedAlgorithm = input<string>('astar'); 
+  selectedAlgorithm = input<string>('astar');
 
   // Outputs (emit events to parent)
   statsChanged = output<SolveStats | null>();

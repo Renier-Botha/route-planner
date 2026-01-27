@@ -1,19 +1,18 @@
 import { Component, ViewChild, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GridComponent } from '../../components/grid/grid.component';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzSelectModule } from 'ng-zorro-antd/select';
 import { CommonModule } from '@angular/common';
-import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { PathfindingService } from '../../services/pathfinding.service';
 
 type Mode = 'wall' | 'erase' | 'start' | 'end';
 
 @Component({
   selector: 'app-visualizer',
-  imports: [CommonModule, GridComponent, NzSpaceModule, NzButtonModule, NzRadioModule, NzSelectModule, FormsModule, NzFlexModule],
+  imports: [
+    CommonModule,
+    GridComponent,
+    FormsModule
+  ],
   templateUrl: './visualizer.html',
   styleUrl: './visualizer.css'
 })
@@ -23,12 +22,20 @@ export class Visualizer {
 
   @ViewChild(GridComponent) grid!: GridComponent;
 
-
-
   currentMode: Mode = 'wall';
   selectedAlgorithm = 'astar';
   algorithms: { key: string; name: string }[] = [];
   lastSolveStats = signal<{ nodes: number; timeMs: number; algorithm: string } | null>(null);
+  isCollapsed = false;
+  gridCols = 60;
+  gridRows = 40;
+
+  readonly modes: readonly { value: Mode; label: string }[] = [
+    { value: 'wall', label: 'Walls' },
+    { value: 'erase', label: 'Erase' },
+    { value: 'start', label: 'Start' },
+    { value: 'end', label: 'End' }
+  ];
 
   ngOnInit(): void {
     this.pathfindingService.getAlgorithms().subscribe(algorithms => {
@@ -37,7 +44,14 @@ export class Visualizer {
   }
 
   onModeChange(mode: Mode): void {
+    this.currentMode = mode;
     this.grid?.setMode(mode);
+  }
+
+  onGridSizeChange(): void {
+    // Clear the grid when dimensions change to avoid state issues
+    this.grid?.clear();
+    this.lastSolveStats.set(null);
   }
 
   onClear(): void {

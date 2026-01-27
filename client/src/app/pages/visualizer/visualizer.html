@@ -1,37 +1,74 @@
 <div class="container">
-
-  <div nz-flex nzVertical="false" class="toolbar">
-    <h1 class="header">{{ title() }}</h1>
-    <nz-space>
-      <nz-select [(ngModel)]="selectedAlgorithm" style="width: 200px;" nzPlaceHolder="Select Algorithm">
-        <nz-option *ngFor="let algo of algorithms" [nzLabel]="algo.name" [nzValue]="algo.key">
-        </nz-option>
-      </nz-select>
-      <nz-radio-group nzButtonStyle="solid" [(ngModel)]="currentMode" (ngModelChange)="onModeChange($event)">
-        <label nz-radio-button nzValue="wall">Draw Walls</label>
-        <label nz-radio-button nzValue="erase">Erase</label>
-        <label nz-radio-button nzValue="start">Set Start</label>
-        <label nz-radio-button nzValue="end">Set End</label>
-      </nz-radio-group>
-      <button nz-button (click)="onSolve()" class="solve-btn">
-        Solve
-      </button>
-      <button nz-button nzDanger (click)="onClear()">
-        Clear
-      </button>
-    </nz-space>
+  <header class="toolbar">
+    <h1>{{ title() }}</h1>
     @if (lastSolveStats(); as stats) {
     <div class="stats">
-      <span>Algorithm: {{ stats.algorithm }}</span>
-      <span>Nodes: {{ stats.nodes }}</span>
-      <span>Time: {{ stats.timeMs.toFixed(2) }}ms</span>
+      <span class="stat-item">{{ stats.algorithm }}</span>
+      <span class="stat-item">{{ stats.nodes }} nodes</span>
+      <span class="stat-item">{{ stats.timeMs.toFixed(2) }}ms</span>
     </div>
     }
+  </header>
+
+  <div class="main-content">
+    <aside class="sidebar" [class.collapsed]="isCollapsed">
+      <button class="collapse-toggle" (click)="isCollapsed = !isCollapsed"
+        [attr.aria-label]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'">
+        <span class="toggle-icon">{{ isCollapsed ? '›' : '‹' }}</span>
+      </button>
+
+      <div class="sidebar-content">
+        <section class="control-section">
+          <label class="control-label">Algorithm</label>
+          <select [(ngModel)]="selectedAlgorithm" class="select-input">
+            <option *ngFor="let algo of algorithms" [value]="algo.key">
+              {{ algo.name }}
+            </option>
+          </select>
+        </section>
+
+        <section class="control-section">
+          <label class="control-label">Grid Size</label>
+          <div class="grid-size-controls">
+            <div class="size-input-group">
+              <label for="cols-input" class="size-label">Columns</label>
+              <input id="cols-input" type="number" [(ngModel)]="gridCols" min="10" max="200" class="number-input"
+                (change)="onGridSizeChange()" />
+            </div>
+            <div class="size-input-group">
+              <label for="rows-input" class="size-label">Rows</label>
+              <input id="rows-input" type="number" [(ngModel)]="gridRows" min="10" max="200" class="number-input"
+                (change)="onGridSizeChange()" />
+            </div>
+          </div>
+        </section>
+
+        <section class="control-section">
+          <label class="control-label">Drawing Mode</label>
+          <div class="button-group">
+            <button *ngFor="let mode of modes" class="mode-button" [class.active]="currentMode === mode.value"
+              (click)="onModeChange(mode.value)">
+              {{ mode.label }}
+            </button>
+          </div>
+        </section>
+
+        <section class="control-section">
+          <label class="control-label">Actions</label>
+          <button class="action-button primary" (click)="onSolve()">
+            Solve
+          </button>
+          <button class="action-button danger" (click)="onClear()">
+            Clear Grid
+          </button>
+        </section>
+      </div>
+    </aside>
+
+    <main class="grid-container">
+      <app-grid [cols]="gridCols" [rows]="gridRows" [selectedAlgorithm]="selectedAlgorithm"
+        (statsChanged)="onStatsChanged($event)">
+      </app-grid>
+    </main>
   </div>
-
-
-  <main class="grid-container">
-    <app-grid [cols]="60" [rows]="40" [selectedAlgorithm]="selectedAlgorithm" (statsChanged)="onStatsChanged($event)">
-    </app-grid>
-  </main>
 </div>
