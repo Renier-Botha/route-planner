@@ -34,8 +34,8 @@ export class GridComponent implements AfterViewInit {
   constructor() {
     // React to changes in cols/rows inputs
     effect(() => {
-      const cols = this.cols();
-      const rows = this.rows();
+      this.cols();
+      this.rows();
 
       if (this.isBrowser && this.ctx) {
         this.initializeGrid();
