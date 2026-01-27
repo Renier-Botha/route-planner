@@ -53,7 +53,7 @@ public class DijkstrasAlgorithm : IPathfindingAlgorithm
                 if (!grid.IsInBounds(neighbor) || grid.IsBlocked(neighbor))
                     continue;
 
-                var tentativeG = gScore[current] + 1;
+                var tentativeG = gScore[current] + grid.GetCost(neighbor);
 
                 if (!gScore.TryGetValue(neighbor, out var g) || tentativeG < g)
                 {

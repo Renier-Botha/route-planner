@@ -48,6 +48,7 @@ public class Program
         // Alternative: Register multiple algorithms with keys
         builder.Services.AddKeyedScoped<IPathfindingAlgorithm, AStarAlgorithm>("astar");
         builder.Services.AddKeyedScoped<IPathfindingAlgorithm, DijkstrasAlgorithm>("dijkstra");
+        builder.Services.AddKeyedScoped<IPathfindingAlgorithm, GreedyAlgorithm>("greedy");
 
         var app = builder.Build();
 

@@ -50,7 +50,8 @@ public class AlgorithmsController(IServiceProvider serviceProvider) : Controller
         var algorithms = new[]
         {
             new AlgorithmInfo("astar", "A* Algorithm"),
-            new AlgorithmInfo("dijkstra", "Dijkstra's Algorithm")
+            new AlgorithmInfo("dijkstra", "Dijkstra's Algorithm"),
+            new AlgorithmInfo("greedy", "Greedy Algorithm")
         };
 
         return Ok(algorithms);

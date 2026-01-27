@@ -5,10 +5,10 @@ using RoutePlanner.Core.Interfaces;
 using RoutePlanner.Core.Models;
 using RoutePlanner.Core.ValueObjects;
 
-// A* Algorithm is similar to Dijkstra's algorithm but with heuristics
-public class AStarAlgorithm : IPathfindingAlgorithm
+// Greedy Algorithm implementation for pathfinding
+public class GreedyAlgorithm : IPathfindingAlgorithm
 {
-    public string Name => "A* Algorithm";
+    public string Name => "Greedy Algorithm";
 
     public PathResult FindPath(PathRequest request)
     {
@@ -16,26 +16,25 @@ public class AStarAlgorithm : IPathfindingAlgorithm
         var grid = request.Grid;
         var start = request.Start;
         var end = request.End;
-        
+
         if (!grid.IsInBounds(start) || !grid.IsInBounds(end))
             return EmptyResult(stopwatch);
-        
+
         if (grid.IsBlocked(start) || grid.IsBlocked(end))
             return EmptyResult(stopwatch);
 
         var directions = new[] { (1, 0), (-1, 0), (0, 1), (0, -1) };
         var open = new PriorityQueue<Point, int>();
         var cameFrom = new Dictionary<Point, Point>();
-        var gScore = new Dictionary<Point, int> { [start] = 0 };
         var visited = new HashSet<Point>();
-        
+
         open.Enqueue(start, Heuristic(start, end));
         var nodesExplored = 0;
 
         while (open.TryDequeue(out var current, out _))
         {
             nodesExplored++;
-            
+
             if (current.Equals(end))
             {
                 var path = ReconstructPath(cameFrom, current);
@@ -48,19 +47,19 @@ public class AStarAlgorithm : IPathfindingAlgorithm
             foreach (var (dx, dy) in directions)
             {
                 var neighbor = new Point(current.X + dx, current.Y + dy);
-                
+
                 if (!grid.IsInBounds(neighbor) || grid.IsBlocked(neighbor))
                     continue;
 
-                var tentativeG = gScore[current] + grid.GetCost(neighbor);
 
-                if (!gScore.TryGetValue(neighbor, out var g) || tentativeG < g)
-                {
-                    cameFrom[neighbor] = current;
-                    gScore[neighbor] = tentativeG;
-                    var f = tentativeG + Heuristic(neighbor, end);
-                    open.Enqueue(neighbor, f);
-                }
+                if (visited.Contains(neighbor))  // ← Add this check
+                    continue;
+
+
+                cameFrom[neighbor] = current;
+                var f = Heuristic(neighbor, end);
+                open.Enqueue(neighbor, f);
+
             }
         }
 
@@ -68,7 +67,7 @@ public class AStarAlgorithm : IPathfindingAlgorithm
         return new PathResult([], nodesExplored, stopwatch.Elapsed, Name, visited);
     }
 
-    private static int Heuristic(Point a, Point b) => 
+    private static int Heuristic(Point a, Point b) =>
         Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
 
     private static List<Point> ReconstructPath(Dictionary<Point, Point> cameFrom, Point current)
@@ -82,7 +81,7 @@ public class AStarAlgorithm : IPathfindingAlgorithm
         path.Reverse();
         return path;
     }
-    
+
     private PathResult EmptyResult(Stopwatch stopwatch)
     {
         stopwatch.Stop();
