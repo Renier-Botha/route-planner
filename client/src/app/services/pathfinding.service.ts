@@ -30,11 +30,11 @@ export interface PathfindingResponse {
 export class PathfindingService {
   private apiUrl = 'http://localhost:5088/api/algorithms';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  findPath(request: PathfindingRequest): Observable<PathfindingResponse> {
+  findPath(request: PathfindingRequest, algorithm: string = 'astar'): Observable<PathfindingResponse> {
     return this.http.post<PathfindingResponse>(
-      `${this.apiUrl}/pathfind`,
+      `${this.apiUrl}/pathfind/${algorithm}`,
       request
     );
   }

@@ -5,6 +5,7 @@ using RoutePlanner.Core.Interfaces;
 using RoutePlanner.Core.Models;
 using RoutePlanner.Core.ValueObjects;
 
+// A* Algorithm is similar to Dijkstra's algorithm but with heuristics
 public class AStarAlgorithm : IPathfindingAlgorithm
 {
     public string Name => "A* Algorithm";

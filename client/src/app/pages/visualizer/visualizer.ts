@@ -22,8 +22,8 @@ export class Visualizer {
   @ViewChild(GridComponent) grid!: GridComponent;
 
   currentMode: Mode = 'wall';
-  selectedAlgorithm = 'A*';
-  algorithms = ['A*', 'Dijkstra', 'BFS', 'DFS'];
+  selectedAlgorithm = 'astar';
+  algorithms = ['astar', 'dijkstra', 'BFS', 'DFS'];
   lastSolveStats = signal<{ nodes: number; timeMs: number; algorithm: string } | null>(null);
 
   onModeChange(mode: Mode): void {

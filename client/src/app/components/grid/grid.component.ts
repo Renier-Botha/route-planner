@@ -33,6 +33,7 @@ export class GridComponent implements AfterViewInit {
   // Inputs (configurable from parent)
   cols = input<number>(60);
   rows = input<number>(40);
+  selectedAlgorithm = input<string>('astar'); 
 
   // Outputs (emit events to parent)
   statsChanged = output<SolveStats | null>();
@@ -176,7 +177,7 @@ export class GridComponent implements AfterViewInit {
       walls,
     };
 
-    this.pathfindingService.findPath(request).subscribe({
+    this.pathfindingService.findPath(request, this.selectedAlgorithm()).subscribe({
       next: (response) => {
         this.path = response.path ?? [];
         this.visited = response.visitedPoints ?? [];

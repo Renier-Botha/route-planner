@@ -21,17 +21,17 @@
       </button>
     </nz-space>
     @if (lastSolveStats(); as stats) {
-      <div class="stats">
-        <span>Algorithm: {{ stats.algorithm }}</span>
-        <span>Nodes: {{ stats.nodes }}</span>
-        <span>Time: {{ stats.timeMs.toFixed(2) }}ms</span>
-      </div>
+    <div class="stats">
+      <span>Algorithm: {{ stats.algorithm }}</span>
+      <span>Nodes: {{ stats.nodes }}</span>
+      <span>Time: {{ stats.timeMs.toFixed(2) }}ms</span>
+    </div>
     }
   </div>
-  
-  
+
+
   <main class="grid-container">
-    <app-grid [cols]="60" [rows]="40" (statsChanged)="onStatsChanged($event)">
+    <app-grid [cols]="60" [rows]="40" [selectedAlgorithm]="selectedAlgorithm" (statsChanged)="onStatsChanged($event)">
     </app-grid>
   </main>
 </div>

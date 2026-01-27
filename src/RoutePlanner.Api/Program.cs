@@ -43,11 +43,11 @@ public class Program
 
         // DI for pathfinding algorithms
         // Default algorithm (can be changed via DI in future)
-        builder.Services.AddScoped<IPathfindingAlgorithm, AStarAlgorithm>();
+        // builder.Services.AddScoped<IPathfindingAlgorithm, AStarAlgorithm>();
         
         // Alternative: Register multiple algorithms with keys
-        // builder.Services.AddKeyedScoped<IPathfindingAlgorithm, AStarAlgorithm>("astar");
-        // builder.Services.AddKeyedScoped<IPathfindingAlgorithm, DijkstraAlgorithm>("dijkstra");
+        builder.Services.AddKeyedScoped<IPathfindingAlgorithm, AStarAlgorithm>("astar");
+        builder.Services.AddKeyedScoped<IPathfindingAlgorithm, DijkstrasAlgorithm>("dijkstra");
 
         var app = builder.Build();
 
