@@ -25,19 +25,36 @@ public class AlgorithmsController(IServiceProvider serviceProvider) : Controller
     {
         // Get the algorithm by key
         var pathfinder = _serviceProvider.GetKeyedService<IPathfindingAlgorithm>(algorithm);
-        
+
         if (pathfinder == null)
             return BadRequest($"Unknown algorithm: {algorithm}");
-        
+
         // 1. Map DTO → Domain
         var domainRequest = PathfindingMapper.ToDomain(requestDto);
-        
+
         // 2. Execute domain logic
         var domainResult = pathfinder.FindPath(domainRequest);
-        
+
         // 3. Map Domain → DTO
         var responseDto = PathfindingMapper.ToDto(domainResult);
-        
+
         return Ok(responseDto);
     }
+
+    /// <summary>Gets list of available pathfinding algorithms.</summary>
+    /// <returns>List of algorithm keys and their display names.</returns>
+    [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<AlgorithmInfo>), StatusCodes.Status200OK)]
+    public ActionResult<IEnumerable<AlgorithmInfo>> GetAlgorithms()
+    {
+        var algorithms = new[]
+        {
+            new AlgorithmInfo("astar", "A* Algorithm"),
+            new AlgorithmInfo("dijkstra", "Dijkstra's Algorithm")
+        };
+
+        return Ok(algorithms);
+    }
+
+    public record AlgorithmInfo(string Key, string Name);
 }
