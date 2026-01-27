@@ -24,6 +24,11 @@ export interface PathfindingResponse {
   visitedPoints: Point[];
 }
 
+interface AlgorithmInfo {
+  key: string;
+  name: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -37,5 +42,9 @@ export class PathfindingService {
       `${this.apiUrl}/pathfind/${algorithm}`,
       request
     );
+  }
+
+  getAlgorithms(): Observable<AlgorithmInfo[]> {
+    return this.http.get<AlgorithmInfo[]>(`${this.apiUrl}`);
   }
 }
