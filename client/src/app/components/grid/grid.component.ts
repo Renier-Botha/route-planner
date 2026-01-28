@@ -230,11 +230,11 @@ export class GridComponent implements AfterViewInit {
     ctx.restore();
 
     // Background
-    ctx.fillStyle = '#fafafa';
+    ctx.fillStyle = '#1e1e1e';
     ctx.fillRect(0, 0, canvas.width / this.dpr, canvas.height / this.dpr);
 
     // Grid lines
-    ctx.strokeStyle = '#e5e7eb';
+    ctx.strokeStyle = '#3e3e42'; 
     ctx.lineWidth = 1;
     for (let c = 1; c < this.cols(); c++) {
       const x = c * this.cellW;
@@ -265,7 +265,7 @@ export class GridComponent implements AfterViewInit {
     }
 
     // Walls
-    ctx.fillStyle = '#374151';
+    ctx.fillStyle = '#9ca3af';  // Medium-light gray
     for (let x = 0; x < this.cols(); x++) {
       for (let y = 0; y < this.rows(); y++) {
         if (this.blocked[x][y]) {
