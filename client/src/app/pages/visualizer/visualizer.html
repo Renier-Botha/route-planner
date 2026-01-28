@@ -1,6 +1,9 @@
 <div class="container">
   <header class="toolbar">
-    <h1>{{ title() }}</h1>
+    <div class="toolbar-left">
+      <a routerLink="/home" class="back-button" title="Back to home">← Back</a>
+      <h1>{{ title() }}</h1>
+    </div>
     @if (lastSolveStats(); as stats) {
     <div class="stats">
       <span class="stat-item">{{ stats.algorithm }}</span>

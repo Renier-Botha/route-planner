@@ -2,6 +2,7 @@ import { Component, ViewChild, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GridComponent } from '../../components/grid/grid.component';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { PathfindingService } from '../../services/pathfinding.service';
 
 type Mode = 'wall' | 'erase' | 'start' | 'end';
@@ -11,7 +12,8 @@ type Mode = 'wall' | 'erase' | 'start' | 'end';
   imports: [
     CommonModule,
     GridComponent,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './visualizer.html',
   styleUrl: './visualizer.css'

@@ -1,0 +1,64 @@
+<div class="container">
+  <header class="toolbar">
+    <div class="toolbar-left">
+      <a routerLink="/home" class="back-button" title="Back to home">← Back</a>
+      <h1>{{ title() }}</h1>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <aside class="sidebar">
+      <div class="sidebar-content">
+        <section class="control-section">
+          <label class="control-label">Algorithm</label>
+          <select [(ngModel)]="selectedAlgorithm" class="select-input">
+            <option *ngFor="let algo of algorithms" [value]="algo.key">
+              {{ algo.name }}
+            </option>
+          </select>
+        </section>
+
+        <section class="control-section">
+          <label class="control-label">Number of Agents</label>
+          <input type="number" [(ngModel)]="agentCount" min="1" max="100" class="number-input" />
+        </section>
+
+        <section class="control-section">
+          <label class="control-label">Simulation Speed</label>
+          <input type="range" [(ngModel)]="simulationSpeed" min="0.1" max="5" step="0.1" class="range-input" />
+          <span class="speed-display">{{ simulationSpeed }}x</span>
+        </section>
+
+        <section class="control-section">
+          <label class="control-label">Traffic Density</label>
+          <select [(ngModel)]="trafficDensity" class="select-input">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </section>
+
+        <section class="control-section">
+          <div class="button-group-vertical">
+            <button class="action-button primary" (click)="startSimulation()" [disabled]="isRunning">
+              Start Simulation
+            </button>
+            <button class="action-button" (click)="pauseSimulation()" [disabled]="!isRunning">
+              Pause
+            </button>
+            <button class="action-button" (click)="resetSimulation()">
+              Reset
+            </button>
+          </div>
+        </section>
+      </div>
+    </aside>
+
+    <main class="canvas-container">
+      <div class="simulation-placeholder">
+        <p>Simulation canvas will be implemented here</p>
+        <p class="hint">This will contain the traffic simulation with multiple agents</p>
+      </div>
+    </main>
+  </div>
+</div>

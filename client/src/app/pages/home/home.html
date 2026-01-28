@@ -1,0 +1,17 @@
+<div class="home-container">
+  <header class="hero">
+    <h1>Route Planner</h1>
+    <p class="subtitle">Explore pathfinding algorithms through visualization and simulation</p>
+  </header>
+
+  <main class="features">
+    <div class="feature-card" *ngFor="let feature of features">
+      <div class="feature-icon">{{ feature.icon }}</div>
+      <h2>{{ feature.title }}</h2>
+      <p>{{ feature.description }}</p>
+      <a [routerLink]="feature.route" class="feature-link">
+        Open {{ feature.title }} →
+      </a>
+    </div>
+  </main>
+</div>
