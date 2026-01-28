@@ -42,6 +42,7 @@
   border-radius: 8px;
   padding: 2rem;
   transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
 }
 
 .feature-card:hover {
@@ -70,11 +71,10 @@
   display: inline-flex;
   align-items: center;
   color: #4fc3f7;
-  text-decoration: none;
   font-weight: 500;
   transition: color 0.2s;
 }
 
-.feature-link:hover {
+.feature-card:hover .feature-link {
   color: #81d4fa;
 }
