@@ -1,11 +1,13 @@
 .home-container {
-  min-height: 100vh;
+  height: 100vh;
+  box-sizing: border-box; /* Include padding in the height calculation */
   background: #1e1e1e;
   color: #e0e0e0;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 3rem 2rem;
+  overflow: hidden; /* Prevent any overflow */
 }
 
 .hero {
