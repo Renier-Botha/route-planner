@@ -1,6 +1,13 @@
 @RoutePlanner_Api_HostAddress = http://localhost:5088
 
-POST {{RoutePlanner_Api_HostAddress}}/api/Path/path
+### Get list of available algorithms
+GET {{RoutePlanner_Api_HostAddress}}/api/algorithms
+Content-Type: application/json
+
+###
+
+### Find path using A* algorithm (with walls)
+POST {{RoutePlanner_Api_HostAddress}}/api/algorithms/pathfind/astar
 Content-Type: application/json
 
 {
@@ -10,7 +17,66 @@ Content-Type: application/json
   "end": { "x": 5, "y": 5 },
   "walls": [
     { "x": 1, "y": 0 },
-    { "x": 1, "y": 1 }
+    { "x": 1, "y": 1 },
+    { "x": 1, "y": 2 },
+    { "x": 1, "y": 3 }
   ]
 }
+
+###
+
+### Find path using Dijkstra's algorithm (with walls)
+POST {{RoutePlanner_Api_HostAddress}}/api/algorithms/pathfind/dijkstra
+Content-Type: application/json
+
+{
+  "width": 60,
+  "height": 40,
+  "start": { "x": 0, "y": 0 },
+  "end": { "x": 5, "y": 5 },
+  "walls": [
+    { "x": 1, "y": 0 },
+    { "x": 1, "y": 1 },
+    { "x": 1, "y": 2 },
+    { "x": 1, "y": 3 }
+  ]
+}
+
+###
+
+### Find path using Greedy algorithm (with walls)
+POST {{RoutePlanner_Api_HostAddress}}/api/algorithms/pathfind/greedy
+Content-Type: application/json
+
+{
+  "width": 60,
+  "height": 40,
+  "start": { "x": 0, "y": 0 },
+  "end": { "x": 5, "y": 5 },
+  "walls": [
+    { "x": 1, "y": 0 },
+    { "x": 1, "y": 1 },
+    { "x": 1, "y": 2 },
+    { "x": 1, "y": 3 }
+  ]
+}
+
+###
+
+### Find path using A* with terrain (weighted grid)
+POST {{RoutePlanner_Api_HostAddress}}/api/algorithms/pathfind/astar
+Content-Type: application/json
+
+{
+  "start": { "x": 0, "y": 0 },
+  "end": { "x": 4, "y": 4 },
+  "terrain": [
+    [1, 1, 1, 1, 1],
+    [1, 5, 5, 5, 1],
+    [1, 5, 0, 5, 1],
+    [1, 5, 5, 5, 1],
+    [1, 1, 1, 1, 1]
+  ]
+}
+
 ###

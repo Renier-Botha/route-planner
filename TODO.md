@@ -127,6 +127,9 @@
   - Collision count
   - Congestion level
 
+#### 2.5 MapLibre (https://maplibre.org/)
+Would like to implement mapLibre package and allow vehicles to navigate on the roads rended in mapLibre 
+
 ---
 
 ## Nice-to-Have Enhancements
